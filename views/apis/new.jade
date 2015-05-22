@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  h1.
+    #{title}
+  form#formAddApi.form-horizontal(name="addApi",method="post",action="/apis")
+    .form-group
+      .col-sm-1
+        label.control-label Name: 
+      .col-sm-4
+        input#inputName.form-control(type="text", placeholder="A simple name", name="name")
+    .form-group
+      .col-sm-1
+        label.control-label.col-md-2 Host:
+      .col-sm-4
+        input#inputBadge.form-control(type="text", placeholder="127.0.0.1:3000", name="host")
+    .form-group
+      .col-sm-1
+        label.control-label Description: 
+      .col-sm-8
+        textarea#inputDob.form-control(form="formAddApi", name="description")
+    p
+      button#btnSubmit.btn.btn-primary(type="submit") submit

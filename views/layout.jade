@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='/stylesheets/sweetAlert.css')
+  body
+    .container
+      ul.nav.nav-pills
+        li(role='presentation')
+          a(href='/') Home
+        li(role='presentation')
+          a(href='about') About
+        li(role='presentation')
+          a(href='/apis') Apis
+    .bg-primary
+      .container
+        .center-block
+          h1 coco
+          p Page description
+    .container
+      block content
+    script(src='/javascripts/jquery-2.1.4.js')
+    script(src='/javascripts/sweetAlert.js')
+    script(src='/javascripts/bootstrap.js')
+    script(src='/javascripts/global.js')

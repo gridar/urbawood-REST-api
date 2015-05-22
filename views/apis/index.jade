@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+    h1.
+         #{title}
+    table.table.table-striped
+      thead
+        tr.info
+          th Name
+          th Description
+          th Host
+          th Methods
+          th
+          th
+          th
+      tbody
+        - each api, i in apis
+            tr
+              th= api.name
+              th= api.description
+              th= api.host
+              th= api.methods.length
+              th
+                a.btn.btn-success(href='/apis/#{api._id}') Show
+              th
+                a.btn.btn-primary(href="apis/#{api._id}/edit") Edit    
+              th
+                form(id='delete-api-#{api._id}' action='/apis/#{api._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
+                  input(type='hidden',value='DELETE',name='_method')
+                  button.btn.btn-danger.confirm-api-delete(type='submit' data-api-id="#{api._id}").
+                    Delete
+    a.btn.btn-primary(href="apis/new") Add Api

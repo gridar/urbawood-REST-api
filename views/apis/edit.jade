@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+  h1.
+    Api ID #{api._id}
+  form#edit-api-form.form-horizontal(action='/apis/#{api._id}/edit',method='post',name='updateblob',enctype='application/x-www-form-urlencoded')
+    input(type='hidden',value='PUT',name='_method')
+    .form-group
+      .col-sm-1
+        label Name: 
+      .col-sm-4
+        input#inputName.form-control(type='text', value='#{api.name}', name='name')
+    .form-group
+      .col-sm-1
+        label Host:
+      .col-sm-4
+        input#inputHost.form-control(type='text', value='#{api.host}', name='host')
+    .form-group
+      .col-sm-1
+        label Description: 
+      .col-sm-8
+        textarea#inputDescription.form-control(form='edit-api-form', value='#{api.description}', name='description')
+          = api.description
+    p 
+      .col-md-1
+        button#btnSubmit.btn.btn-success(type='submit').
+          Update
+      .col-md-1
+        a#btnSubmit.btn.btn-danger(href='/apis').
+          Cancel

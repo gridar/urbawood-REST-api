@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    h1.
+        Api #{api._id}
+    p Name: #{api.name}
+    p Host: #{api.host}
+    p Description: #{api.description}
+    p methods: #{api.methods}
+
+    .col-md-1
+      a.btn.btn-success(href="#{api._id}/edit") Edit
+    .col-md-1
+      form(id='delete-api-#{api._id}' action='#{api._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
+        input(type='hidden',value='DELETE',name='_method')
+        button.btn.btn-danger.confirm-api-delete(type='submit' data-api-id="#{api._id}").
+          Delete

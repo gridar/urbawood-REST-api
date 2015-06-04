@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+  h1.
+    #{title}
+  form#formAddMethod.form-horizontal(name="addMethod",method="post",action="/methods")
+    .form-group
+      .col-sm-1
+        label.control-label Name: 
+      .col-sm-4
+        input#inputName.form-control(type="text", placeholder="A simple name", name="name")
+    .form-group
+      .col-sm-1
+        label.control-label.col-md-2 Type:
+      .col-sm-4
+        select(form="formAddMethod", name='type')
+          option(value='GET') GET
+          option(value='POST') POST
+          option(value='PUT') PUT      
+          option(value='DELETE') DELETE
+    .form-group
+      .col-sm-1
+        label.control-label.col-md-2 Api:
+      .col-sm-4
+        select(name='apiId')
+          - for(var i in apis)
+            option(value= apis[i]._id)= apis[i].name
+    .form-group
+      .col-sm-1
+        label.control-label Description: 
+      .col-sm-8
+        textarea#inputDob.form-control(form="formAddMethod", name="description")    
+    .form-group
+      .col-sm-1
+        label.control-label Script: 
+      .col-sm-8
+        textarea#inputDob.form-control(form="formAddMethod", name="script")
+    p
+      button#btnSubmit.btn.btn-primary(type="submit") submit

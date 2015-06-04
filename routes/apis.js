@@ -3,6 +3,9 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var vm = require('vm');
+var restClient = require('restler');
+var helper = require('../helper/helper');
 
 // Prepare CRUD and REST methods
 router.use(bodyParser.urlencoded({ extended: true }))
@@ -41,49 +44,49 @@ router.param('id', function(req, res, next, id) {
 /* GET all apis. */
 router.route('/').get(function(req, res, next) {
     //retrieve all apis from Monogo
-    mongoose.model('Api').find({}, function (err, apis) {
-      if (err) {
-        return console.error(err);
-      } else {
-        res.format({
-          html: function(){
-            res.render('apis/index', {
-              title: 'All Apis',
-              "apis" : apis
-            });
-          }
-        });
-      }     
-    });
-  })
+  mongoose.model('Api').find({}, function (err, apis) {
+    if (err) {
+      return console.error(err);
+    } else {
+      res.format({
+        html: function(){
+          res.render('apis/index', {
+            title: 'All Apis',
+            "apis" : apis
+          });
+        }
+      });
+    }     
+  });
+})
 
 /* POST a new api. */
 router.route('/').post(function(req, res) {
     // Get values from POST request.
-    var name = req.body.name;
-    var host = req.body.host;
-    var description = req.body.description;
-    var methods = req.body.methods;
+  var name = req.body.name;
+  var host = req.body.host;
+  var description = req.body.description;
+  var methods = req.body.methods;
 
-    mongoose.model('Api').create({
-      name : name,
-      host : host,
-      description : description,
-      methods : methods
-    }, function (err, api) {
-      if (err) {
-        res.send("There was a problem adding the api to the database.");
-      } else {
-        console.log('POST creating new api: ' + api);
-        res.format({
-          html: function(){
-            res.location("apis");
-            res.redirect("/apis");
-          }
-        });
-      }
-    })
-  });
+  mongoose.model('Api').create({
+    name : name,
+    host : host,
+    description : description,
+    methods : methods
+  }, function (err, api) {
+    if (err) {
+      res.send("There was a problem adding the api to the database.");
+    } else {
+      console.log('POST creating new api: ' + api);
+      res.format({
+        html: function(){
+          res.location("apis");
+          res.redirect("/apis");
+        }
+      });
+    }
+  })
+});
 
 /* GET New Api page. */
 router.get('/new', function(req, res) {
@@ -91,22 +94,28 @@ router.get('/new', function(req, res) {
 });
 
 /* SHOW a Api by ID. */
-router.route('/:id')
-  .get(function(req, res) {
-    mongoose.model('Api').findById(req.id, function (err, api) {
-      if (err) {
-        console.log('GET Error: There was a problem retrieving: ' + err);
-      } else {
+router.route('/:id').get(function(req, res) {
+  mongoose.model('Api').findById(req.id, function (err, api) {
+    if (err) {
+      console.log('GET Error: There was a problem retrieving: ' + err);
+    } else {
+      mongoose.model('Method').find({
+          '_id': { $in: api.methods}
+      }, function(err, methods){
         res.format({
           html: function(){
-              res.render('apis/show', {
-                "api" : api
-              });
+            res.render('apis/show', {
+              "api" : api,
+              "methods" : methods
+            });
           }
         });
-      }
-    });
+      });
+
+      
+    }
   });
+});
 
 /* GET the Api by Mongo ID */
 router.route('/:id/edit').get(function(req, res) {
@@ -177,6 +186,25 @@ router.delete('/:id/edit', function (req, res){
         }
       });
     }
+  });
+});
+
+router.get('/:api/:method/*', function(req, res) {
+  response = res;
+  argument = req.url.split('/').slice(3);
+  var apiName = req.params.api;
+  var methodName = req.params.method;
+  
+  mongoose.model('Api').findOne({'name': apiName}, function (err, api) {
+    host = api.host;
+    api.methods.forEach(function(methodId) {
+      mongoose.model('Method').findById(methodId, function (err, method) {
+        if(method.name == methodName) {
+          eval(method.script)
+          //vm.createScript(method.script).runInThisContext();
+        }
+      });
+    });
   });
 });
 

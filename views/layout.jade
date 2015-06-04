@@ -5,6 +5,7 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/sweetAlert.css')
+    link(rel='stylesheet', href='/stylesheets/prettify.css')
   body
     .container
       ul.nav.nav-pills
@@ -17,11 +18,12 @@ html
     .bg-primary
       .container
         .center-block
-          h1 coco
-          p Page description
+          h1= title
+          p= pageDescription
     .container
       block content
     script(src='/javascripts/jquery-2.1.4.js')
     script(src='/javascripts/sweetAlert.js')
     script(src='/javascripts/bootstrap.js')
     script(src='/javascripts/global.js')
+    script(src='/javascripts/prettify.js')

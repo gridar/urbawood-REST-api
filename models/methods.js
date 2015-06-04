@@ -6,6 +6,7 @@ var methodSchema = mongoose.Schema({
   type: String,
   parameters: Array,
   script: String,
+  _api: { type: mongoose.Schema.Types.ObjectId, ref: 'api' }
 }, {collection: 'method'});
 
 mongoose.model('Method', methodSchema);

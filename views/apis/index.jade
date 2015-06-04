@@ -23,7 +23,7 @@ block content
               th
                 a.btn.btn-success(href='/apis/#{api._id}') Show
               th
-                a.btn.btn-primary(href="apis/#{api._id}/edit") Edit    
+                a.btn.btn-primary(href="/apis/#{api._id}/edit") Edit    
               th
                 form(id='delete-api-#{api._id}' action='/apis/#{api._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
                   input(type='hidden',value='DELETE',name='_method')

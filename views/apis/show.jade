@@ -1,13 +1,32 @@
 extends ../layout
 
 block content
-    h1.
-        Api #{api._id}
-    p Name: #{api.name}
-    p Host: #{api.host}
-    p Description: #{api.description}
-    p methods: #{api.methods}
-
+  .row
+    .col-md-5.col-md-offset-3.text-center
+      h1= api.name
+  .row
+    .col-md-1.col-md-offset-2
+      .label.label-default Host:
+    .col-md-5
+      pre
+        h4= api.host
+  .row
+    .col-md-1.col-md-offset-2
+      .label.label-default Id:
+    .col-md-5
+      pre
+        h4= api._id
+  .row
+    .col-md-1.col-md-offset-2
+      .label.label-default Description:
+    .col-md-5
+      pre
+        h4= api.description
+  br
+  br
+  .row
+    .col-md-1.col-md-offset-4
+      a.btn.btn-primary(href="/apis") Back
     .col-md-1
       a.btn.btn-success(href="#{api._id}/edit") Edit
     .col-md-1
@@ -15,3 +34,80 @@ block content
         input(type='hidden',value='DELETE',name='_method')
         button.btn.btn-danger.confirm-api-delete(type='submit' data-api-id="#{api._id}").
           Delete
+  br
+  br
+
+  .row
+    h2 Methods :
+
+  .row
+    - for(var i in methods)
+      - method = methods[i]
+      .container
+        pre.bg-info
+          h3= method.name
+          case method.type
+            when "GET"
+              .label.label-success= method.type
+            when "POST"
+              .label.label-active= method.type
+            when "PUT"
+              .label.label-warning= method.type
+            when "PATCH"
+              .label.label-warning= method.type
+            when "DELETE"
+              .label.label-alert= method.type
+          blockquote= method.description
+          h4 script :
+          pre.active.prettyprint
+            = method.script
+          h4 parameters :
+          pre
+            .row
+              .col-md-2 name
+              .col-md-2 locatedIn
+              .col-md-2 description
+              .col-md-2 requiered
+              .col-md-2 shema
+
+            .row
+              .col-md-2= method.parameters[0].name
+              .col-md-2= method.parameters[0].locatedIn
+              .col-md-2= method.parameters[0].description
+              .col-md-2= method.parameters[0].requiered
+              .col-md-2= method.parameters[0].shema
+
+          br
+          .row
+            .col-md-1
+              a.btn.btn-success(href="/methods/#{method._id}/edit") Edit
+            .col-md-1
+              form(id='delete-method-#{method._id}' action='/methods/#{method._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
+                input(type='hidden',value='DELETE',name='_method')
+                button.btn.btn-danger.confirm-method-delete(type='submit' data-method-id="#{method._id}").
+                  Delete
+  .row
+    a.btn.btn-primary(href="/methods/new") Add Method
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

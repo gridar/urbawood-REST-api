@@ -1,31 +1,30 @@
 extends ../layout
 
 block content
-  .row
-    .col-md-5.col-md-offset-3.text-center
+  .row.text-center
       h1= api.name
+  br
   .row
     .col-md-1.col-md-offset-2
       .label.label-default Host:
-    .col-md-5
+    .col-md-6
       pre
         h4= api.host
   .row
     .col-md-1.col-md-offset-2
       .label.label-default Id:
-    .col-md-5
+    .col-md-6
       pre
         h4= api._id
   .row
     .col-md-1.col-md-offset-2
       .label.label-default Description:
-    .col-md-5
+    .col-md-6
       pre
         h4= api.description
   br
-  br
   .row
-    .col-md-1.col-md-offset-4
+    .col-md-1.col-md-offset-6
       a.btn.btn-primary(href="/apis") Back
     .col-md-1
       a.btn.btn-success(href="#{api._id}/edit") Edit
@@ -37,7 +36,7 @@ block content
   br
   br
 
-  .row
+  .row.text-center
     h2 Methods :
 
   .row

@@ -2,6 +2,7 @@ extends ../layout
 
 block content
   p= method.name
+  a.label.label-default(href="/apis/" + api._id) Go to Api
   p= method.description
   p= method.script
   p= method.argument

@@ -23,7 +23,10 @@ block content
       .col-sm-1
         label.control-label.col-md-2 Api:
       .col-sm-4
-        p= api.name
+        - if(api)
+          p= api.name
+        - else
+          .label.label-danger api id is not defined please update your shema
     .form-group
       .col-sm-1
         label.control-label Description: 
@@ -35,4 +38,9 @@ block content
       .col-sm-8
         textarea#inputDob.form-control(form="edit-method-form", name="script")= method.script
     p
-      button#btnSubmit.btn.btn-primary(type="submit") submit
+      .col-md-1
+        button#btnSubmit.btn.btn-success(type='submit').
+          Update
+      .col-md-1
+        a#btnSubmit.btn.btn-danger(href='/methods').
+          Cancel

@@ -33,10 +33,12 @@ app.use(function(req,res,next){
 var home = require('./routes/home');
 var apis = require('./routes/apis');
 var methods = require('./routes/methods');
+var api = require('./routes/api');
 
 app.use('/', home);
 app.use('/apis', apis);
 app.use('/methods', methods);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

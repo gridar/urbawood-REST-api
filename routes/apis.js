@@ -3,9 +3,6 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
-var vm = require('vm');
-var restClient = require('restler');
-var helper = require('../helper/helper');
 
 // Prepare CRUD and REST methods
 router.use(bodyParser.urlencoded({ extended: true }))
@@ -186,25 +183,6 @@ router.delete('/:id/edit', function (req, res){
         }
       });
     }
-  });
-});
-
-router.get('/:api/:method/*', function(req, res) {
-  response = res;
-  argument = req.url.split('/').slice(3);
-  var apiName = req.params.api;
-  var methodName = req.params.method;
-  
-  mongoose.model('Api').findOne({'name': apiName}, function (err, api) {
-    host = api.host;
-    api.methods.forEach(function(methodId) {
-      mongoose.model('Method').findById(methodId, function (err, method) {
-        if(method.name == methodName) {
-          eval(method.script)
-          //vm.createScript(method.script).runInThisContext();
-        }
-      });
-    });
   });
 });
 

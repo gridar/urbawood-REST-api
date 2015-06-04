@@ -136,14 +136,17 @@ router.route('/:id/edit').get(function(req, res) {
     if (err) {
       console.log('GET Error: There was a problem retrieving: ' + err);
     } else {
-      res.format({
-        html: function(){
-           res.render('methods/edit', {
-            title: 'Method' + method._id,
-            "method" : method
-          });
-        }
-      });
+      mongoose.model('Api').findById(method._api, function(err, api){
+        res.format({
+          html: function(){
+             res.render('methods/edit', {
+              title: 'Method' + method._id,
+              "method" : method,
+              "api" : api
+            });
+          }
+        });
+      })
     }
   });
 })

@@ -62,20 +62,24 @@ block content
           pre.active.prettyprint
             = method.script
           h4 parameters :
-          pre
-            .row
-              .col-md-2 name
-              .col-md-2 locatedIn
-              .col-md-2 description
-              .col-md-2 requiered
-              .col-md-2 shema
+          - if(method.parameters && method.parameters.size > 0)
+            pre
+              .row
+                .col-md-2 name
+                .col-md-2 locatedIn
+                .col-md-2 description
+                .col-md-2 requiered
+                .col-md-2 shema
 
-            .row
-              .col-md-2= method.parameters[0].name
-              .col-md-2= method.parameters[0].locatedIn
-              .col-md-2= method.parameters[0].description
-              .col-md-2= method.parameters[0].requiered
-              .col-md-2= method.parameters[0].shema
+              .row
+                .col-md-2= method.parameters[0].name
+                .col-md-2= method.parameters[0].locatedIn
+                .col-md-2= method.parameters[0].description
+                .col-md-2= method.parameters[0].requiered
+                .col-md-2= method.parameters[0].shema
+          - else
+            pre
+              p Aucun paramètres
 
           br
           .row

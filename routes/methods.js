@@ -67,7 +67,7 @@ router.route('/').post(function(req, res) {
   var name = req.body.name;
   var description = req.body.description;
   var type = req.body.type;
-  var parameters = req.body.parameters;
+  var parameters = req.body.parameters || [];
   var script = req.body.script;
   var apiId = req.body.apiId;
 
@@ -83,15 +83,15 @@ router.route('/').post(function(req, res) {
     if (err) {
       res.send("There was a problem adding the method to the database.");
     } else {
-      console.log('POST creating new method: ' + method);
       mongoose.model('Api').findById(apiId, function (err, api) {
+
         api.methods.push(method._id);
-        
-        console.log(api)
+        api.save();
+
         res.format({
           html: function(){
             res.location("apis");
-            res.redirect("/apis/" + apiId + "/edit");
+            res.redirect("/apis/" + apiId);
           }
         });
       })
@@ -119,25 +119,18 @@ router.route('/:id').get(function(req, res) {
     if (err) {
       console.log('GET Error: There was a problem retrieving: ' + err);
     } else {
-      mongoose.model('Method').find({
-          '_id': { $in: method.methods}
-      }, function(err, methods){
-        res.format({
-          html: function(){
-            res.render('methods/show', {
-              "method" : method,
-              "methods" : methods
-            });
-          }
-        });
-      });
-
-      
+      res.format({
+        html: function(){
+          res.render('methods/show', {
+            "method" : method
+          });
+        }
+      });  
     }
   });
 });
 
-/* GET the Method by Mongo ID */
+/* GET the Method edition form by Mongo ID */
 router.route('/:id/edit').get(function(req, res) {
   mongoose.model('Method').findById(req.id, function (err, method) {
     if (err) {
@@ -176,7 +169,6 @@ router.route('/:id/edit').put(function(req, res) {
         res.send("There was a problem updating the information to the database: " + err);
       } 
       else {
-        //HTML responds by going back to the page or you can be fancy and create a new view that shows a success page.
         res.format({
           html: function(){
             res.redirect("/methods/" + method._id);

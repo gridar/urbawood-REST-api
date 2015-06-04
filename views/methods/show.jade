@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  p= method.name
+  p= method.description
+  p= method.script
+  p= method.argument
+  .row    
+    .col-md-1.col-md-offset-4
+      a.btn.btn-primary(href="/methods") Back
+    .col-md-1
+      a.btn.btn-success(href="#{method._id}/edit") Edit
+    .col-md-1
+      form(id='delete-method-#{method._id}' action='#{method._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
+        input(type='hidden',value='DELETE',name='_method')
+        button.btn.btn-danger.confirm-method-delete(type='submit' data-method-id="#{method._id}").
+          Delete

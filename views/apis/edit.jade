@@ -3,7 +3,7 @@ extends ../layout
 block content
   h1.
     Api ID #{api._id}
-  form#edit-api-form.form-horizontal(action='/apis/#{api._id}/edit',method='post',name='updateblob',enctype='application/x-www-form-urlencoded')
+  form#edit-api-form.form-horizontal(action='/apis/#{api._id}/edit',method='post', enctype='application/x-www-form-urlencoded')
     input(type='hidden',value='PUT',name='_method')
     .form-group
       .col-sm-1

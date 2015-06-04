@@ -30,7 +30,7 @@ $(function() {
       confirmButtonColor: "#ec6c62"
     }, 
     function() {
-      $("#delete-api-"+methodId).submit()
+      $("#delete-method-"+methodId).submit()
     }
     );
   }
@@ -44,6 +44,6 @@ $(function() {
   $(".confirm-method-delete").click(function(event){
     event.preventDefault();
     var methodId = $(this).attr("data-method-id");
-    deleteApi(methodId);
+    deleteMethod(methodId);
   })
 });

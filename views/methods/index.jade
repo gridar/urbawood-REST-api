@@ -1,6 +1,32 @@
 extends ../layout
 
 block content
-  ul
-    - for(var i in methods)
-      li= methods[i]
+    h1.
+         #{title}
+    table.table.table-striped
+      thead
+        tr.info
+          th Name
+          th Description
+          th Host
+          th Methods
+          th
+          th
+          th
+      tbody
+        - each method, i in methods
+            tr
+              th= method.name
+              th= method.description
+              th= method.script
+              th= method.parameters
+              th
+                a.btn.btn-success(href='/methods/#{method._id}') Show
+              th
+                a.btn.btn-primary(href="/methods/#{method._id}/edit") Edit    
+              th
+                form(id='delete-method-#{method._id}' action='/methods/#{method._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
+                  input(type='hidden',value='DELETE',name='_method')
+                  button.btn.btn-danger.confirm-method-delete(type='submit' data-method-id="#{method._id}").
+                    Delete
+    a.btn.btn-primary(href="methods/new") Add Method

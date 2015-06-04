@@ -1,4 +1,38 @@
 extends ../layout
 
 block content
-  p edit
+  h1.
+    #{title}
+  form#edit-method-form.form-horizontal(action='/methods/#{method._id}/edit',method='post', enctype='application/x-www-form-urlencoded')
+    input(type='hidden',value='PUT',name='_method')
+    .form-group
+      .col-sm-1
+        label.control-label Name: 
+      .col-sm-4
+        input#inputName.form-control(type="text", placeholder="A simple name", name="name", value= method.name)
+    .form-group
+      .col-sm-1
+        label.control-label.col-md-2 Type:
+      .col-sm-4
+        select(form="edit-method-form", name='type')
+          option(value='GET') GET
+          option(value='POST') POST
+          option(value='PUT') PUT
+          option(value='DELETE') DELETE
+    .form-group
+      .col-sm-1
+        label.control-label.col-md-2 Api:
+      .col-sm-4
+        p plop
+    .form-group
+      .col-sm-1
+        label.control-label Description: 
+      .col-sm-8
+        textarea#inputDob.form-control(form="edit-method-form", name="description")= method.description
+    .form-group
+      .col-sm-1
+        label.control-label Script: 
+      .col-sm-8
+        textarea#inputDob.form-control(form="edit-method-form", name="script")= method.script
+    p
+      button#btnSubmit.btn.btn-primary(type="submit") submit

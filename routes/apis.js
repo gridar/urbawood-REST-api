@@ -66,7 +66,7 @@ router.route('/').post(function(req, res) {
   var name = req.body.name;
   var host = req.body.host;
   var description = req.body.description;
-  var methods = req.body.methods;
+  var methods = [];
 
   mongoose.model('Api').create({
     name : name,

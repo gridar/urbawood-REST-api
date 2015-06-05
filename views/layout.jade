@@ -20,8 +20,7 @@ html
     .bg-primary
       .container
         .center-block
-          h1= title
-          p= pageDescription
+          h1= title || message
     .container
       block content
     script(src='/javascripts/jquery-2.1.4.js')

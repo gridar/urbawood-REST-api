@@ -6,6 +6,7 @@ var methodOverride = require('method-override');
 
 // Prepare CRUD and REST methods
 router.use(bodyParser.urlencoded({ extended: true }))
+
 router.use(methodOverride(function(req, res){
       if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         // look in urlencoded POST bodies and delete it
@@ -30,6 +31,7 @@ router.param('id', function(req, res, next, id) {
               next(err);
            }
       });
+      return next(err)
     //if it is found we continue on
     } else {
       req.id = id;
@@ -40,20 +42,20 @@ router.param('id', function(req, res, next, id) {
 
 /* GET all apis. */
 router.route('/').get(function(req, res, next) {
-    //retrieve all apis from Monogo
+
   mongoose.model('Api').find({}, function (err, apis) {
-    if (err) {
-      return console.error(err);
-    } else {
-      res.format({
-        html: function(){
-          res.render('apis/index', {
-            title: 'All Apis',
-            "apis" : apis
-          });
-        }
-      });
-    }     
+    
+    if (error) return next(error);
+    
+    res.format({
+      html: function(){
+        res.render('apis/index', {
+          title: 'All Apis',
+          "apis" : apis
+        });
+      }
+    });
+         
   });
 })
 
@@ -92,43 +94,43 @@ router.get('/new', function(req, res) {
 
 /* SHOW a Api by ID. */
 router.route('/:id').get(function(req, res) {
+  
   mongoose.model('Api').findById(req.id, function (err, api) {
-    if (err) {
-      console.log('GET Error: There was a problem retrieving: ' + err);
-    } else {
-      mongoose.model('Method').find({
-          '_id': { $in: api.methods}
-      }, function(err, methods){
-        res.format({
-          html: function(){
-            res.render('apis/show', {
-              "api" : api,
-              "methods" : methods
-            });
-          }
-        });
-      });
+    
+    if (error) return next(error);
 
-      
-    }
+    mongoose.model('Method').find({
+        '_id': { $in: api.methods}
+    }, function(err, methods){
+      res.format({
+        html: function(){
+          res.render('apis/show', {
+            "api" : api,
+            "methods" : methods
+          });
+        }
+      });
+    });
+
   });
 });
 
 /* GET the Api by Mongo ID */
 router.route('/:id/edit').get(function(req, res) {
+  
   mongoose.model('Api').findById(req.id, function (err, api) {
-    if (err) {
-      console.log('GET Error: There was a problem retrieving: ' + err);
-    } else {
-      res.format({
-        html: function(){
-           res.render('apis/edit', {
-            title: 'Api' + api._id,
-            "api" : api
-          });
-        }
-      });
-    }
+    
+    if (error) return next(error);
+
+    res.format({
+      html: function(){
+         res.render('apis/edit', {
+          title: 'Api' + api._id,
+          "api" : api
+        });
+      }
+    });
+
   });
 })
 

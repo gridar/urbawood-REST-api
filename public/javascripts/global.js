@@ -1,5 +1,10 @@
 $(function() {
 
+  $(".no-follow").click(function(event){
+    $.ajax({url: $(this).data("href")})
+  })
+
+
   // Synthaxe coloration for javascript code in .html
   prettyPrint()
 
@@ -46,4 +51,5 @@ $(function() {
     var methodId = $(this).attr("data-method-id");
     deleteMethod(methodId);
   })
+
 });

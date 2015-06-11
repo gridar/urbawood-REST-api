@@ -9,8 +9,11 @@ var router = express.Router();
 router.get('/:api/:method/*', function(req, res) {
   response = res;
   argument = req.url.split('/').slice(3);
+  console.log(argument)
   var apiName = req.params.api;
+  console.log("apiNem = " + apiName);
   var methodName = req.params.method;
+  console.log("api methode = " + methodName)
   
   mongoose.model('Api').findOne({'name': apiName}, function (err, api) {
     host = api.host;
@@ -23,6 +26,7 @@ router.get('/:api/:method/*', function(req, res) {
       });
     });
   });
+
 });
 
 module.exports = router;

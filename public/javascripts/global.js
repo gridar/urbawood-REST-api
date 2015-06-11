@@ -56,4 +56,4 @@ $(function() {
 //   text: 'I will close in 2 seconds.',
 //   timer: 2000,
 //   showConfirmButton: false });
-// });
+});

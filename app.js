@@ -34,11 +34,13 @@ var home = require('./routes/home');
 var apis = require('./routes/apis');
 var methods = require('./routes/methods');
 var api = require('./routes/api');
+var apiv2 = require('./routes/apiv2');
 
 app.use('/', home);
 app.use('/apis', apis);
 app.use('/methods', methods);
 app.use('/api', api);
+app.use('/apiv2', apiv2);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

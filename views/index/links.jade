@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+  .container
+    ul.list-group
+      li.list-group-item
+        a.btn.btn-info(href='api/allLights/on/0') All lights on
+      li.list-group-item
+        a.btn.btn-info(href='api/allLights/off/0') All lights off
+      li.list-group-item
+        a.btn.btn-info(href='api/bravia/power/on') Turn tv on
+      li.list-group-item 
+        a.btn.btn-info(href='api/tv/widget/menu') Show menu
+      li.list-group-item
+        a.btn.btn-info(href='api/bravia/power/off') Turn tv off

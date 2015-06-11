@@ -6,7 +6,10 @@ html
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/sweetAlert.css')
     link(rel='stylesheet', href='/stylesheets/prettify.css')
+
   body
+    - if(flash)
+      .flash(data-content= flash)
     .container
       ul.nav.nav-pills
         li(role='presentation')
@@ -17,6 +20,8 @@ html
           a(href='/apis') Apis
         li(role='presentation')
           a(href='/methods') Methods
+        li(role='presentation')
+          a(href='/links') Links
     .bg-primary
       .container
         .center-block

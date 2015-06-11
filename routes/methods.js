@@ -9,6 +9,7 @@ var helper = require('../helper/helper');
 
 // Prepare CRUD and REST methods
 router.use(bodyParser.urlencoded({ extended: true }))
+
 router.use(methodOverride(function(req, res){
       if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         // look in urlencoded POST bodies and delete it
@@ -36,6 +37,7 @@ router.param('id', function(req, res, next, id) {
     //if it is found we continue on
     } else {
       req.id = id;
+      req.myMethod = method;
       next(); 
     } 
   });
@@ -187,27 +189,19 @@ router.route('/:id/edit').put(function(req, res) {
 
 /* DELETE a Method by ID. */
 router.delete('/:id/edit', function (req, res){
-  //find api by ID
-  console.log(req.id)
-  mongoose.model('Method').findById(req.id, function (err, method) {
-    if (err) {
-        return console.error(err);
-    } else {
-      //remove it from Mongo
-      method.remove(function (err, method) {
-        if (err) {
-            return console.error(err);
-        } else {
-          //Returning success messages saying it was deleted
-          console.log('DELETE removing ID: ' + method._id);
-          res.format({
-            html: function(){
-              res.redirect("/methods");
-            }
-          });
-        }
-      });
-    }
+  method = req.method;
+  console.log(req.myMethod)
+  //remove it from Mongo
+  method.remove(function (err, method) {
+    
+    if (err) return next(err);
+
+    res.format({
+      html: function(){
+        res.redirect("/methods");
+      }
+    });
+
   });
 });
 
